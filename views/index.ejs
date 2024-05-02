@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Price</title>
+  </head>
+  <body>
+    <h1>Stock Price</h1>
+    <div id="stock-price">
+      <% if (price !== null) { %>
+      <p>Price: <%= price %></p>
+      <p
+        style="color: <%= (lastPrice === null || lastPrice === price) ? 'black' : (price > lastPrice) ? 'green' : 'red' %>;"
+      >
+        <%= (lastPrice === null || lastPrice === price) ? 'No change' : (price >
+        lastPrice) ? 'Price increased' : 'Price decreased' %>
+      </p>
+      <% } else { %>
+      <p>Loading...</p>
+      <% } %>
+    </div>
+  </body>
+</html>

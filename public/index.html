@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binance Price Tracker</title>
+    <style>
+      #price {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .green {
+        color: green;
+      }
+      .red {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="price">Loading...</div>
+
+    <script>
+      const priceElement = document.getElementById("price");
+      let ws = new WebSocket("wss://stream.binance.com:9443/ws/atausdt@trade");
+
+      let oldPrice = 0;
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const price = parseFloat(data.p).toFixed(4);
+
+        // Determine color based on price change
+        let colorClass = "";
+        if (price > oldPrice) {
+          colorClass = "green";
+        } else if (price < oldPrice) {
+          colorClass = "red";
+        }
+
+        // Update price with color
+        priceElement.innerText = price;
+        priceElement.className = colorClass;
+
+        oldPrice = price;
+      };
+
+      ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+
+      ws.onclose = () => {
+        console.log("WebSocket connection closed.");
+      };
+    </script>
+  </body>
+</html>
