@@ -3,8 +3,6 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
-const WebSocket = require("ws");
-
 let price = 0;
 
 const ws = new WebSocket("wss://stream.binance.com:9443/ws/atausdt@trade");
